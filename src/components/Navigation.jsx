@@ -6,7 +6,6 @@ import './Navigation.css';
 import { useState } from 'react';
 import { getCityByName } from '../api';
 import { setErrorMessage } from '../redux/citiesReducer';
-import MessageComponent from './MessageComponent';
 
 const Navigation = () => {
   const [cityName, setCityName] = useState('');
@@ -17,19 +16,12 @@ const Navigation = () => {
   const handleCityChange = (event) => {
     setCityName(event.target.value);
     dispatch(setErrorMessage(''));
-  }
+  };
 
   const handleCityFind = () => {
     dispatch(getCityByName(cityName));
-    setCityName('')
-  }
-
-  // const dispatch = useDispatch();
-  // const dateRange = useTypedSelector(state => state.weather.weatherRange);
-
-  // const onSelectHandler = (event) => {
-  //   dispatch(setDay(event.target.value))
-  // }
+    setCityName('');
+  };
 
   return (
     <header className="has-background-link-light">
@@ -44,7 +36,6 @@ const Navigation = () => {
           <p className="has-text-danger-dark">{errorMessage}</p>
         </div>
       </nav>
-      <MessageComponent />
     </header>
   );
 };

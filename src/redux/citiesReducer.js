@@ -7,7 +7,7 @@ const initialState = {
 const FETCH_CITY = 'FETCH_CITY';
 const DELETE_CITY= 'DELETE_CITY';
 const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
-const SUCCESS_MESSAGE = 'SUCCESS_MESSAGE';
+const REFRESH_CITIES = 'REFRESH_CITIES';
 
 export const citiesReducer = (state = initialState, action) => {
   switch(action.type) {
@@ -15,7 +15,6 @@ export const citiesReducer = (state = initialState, action) => {
       const existedCity = state.cities.find(city => city.id === action.payload.id);
 
       if (!existedCity) {
-
         localStorage.setItem('cities', JSON.stringify([...state.cities, action.payload]))
         return {
           ...state,
@@ -40,6 +39,14 @@ export const citiesReducer = (state = initialState, action) => {
         errorMessage: action.payload,
       }
 
+    case REFRESH_CITIES:
+      localStorage.setItem('cities', JSON.stringify(action.payload));
+
+      return {
+        ...state,
+        cities: action.payload,
+      }
+
     default:
       return state;
   }
@@ -48,3 +55,4 @@ export const citiesReducer = (state = initialState, action) => {
 export const fetchCity = (data) => ({type: FETCH_CITY, payload: data});
 export const deleteCity = (cityId) => ({type: DELETE_CITY, payload: cityId});
 export const setErrorMessage = (message) => ({type: SET_ERROR_MESSAGE, payload: message});
+export const refreshCities = (cities) => ({type: REFRESH_CITIES, payload: cities})

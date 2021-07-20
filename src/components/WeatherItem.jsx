@@ -15,13 +15,15 @@ const WeatherItem = ({day, cityName}) => {
   return (
     <>
       <div className="card">
-        <header className="card-header has-background-primary-dark" style={{display: 'flex', justifyContent: 'space-between'}}>
+        <header className="card-header has-background-primary-dark" 
+          style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
+        >
           <p className="card-header-title has-text-white">
             {cityName}
           </p>
-          <span className="icon">
-            <img src={`https://openweathermap.org/img/w/${day.weather[0].icon}.png`}></img>
-          </span>
+          <div className="icon" style={{width: '36px'}}>
+            <img style={{alignSelf: 'center'}} src={`https://openweathermap.org/img/w/${day.weather[0].icon}.png`}></img>
+          </div>
         </header>
         <div className="card-content has-background-info-light">
           <div className="content">

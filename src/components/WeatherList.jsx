@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getCityByCoords } from '../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCityByCoords, getCityByName, refreshCitiesData } from '../api';
 import CurrentCity from './CurrentCity';
 import './WeatherList.css'
+import { FaSync } from "react-icons/fa";
 
 const WeatherList = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const cities = useSelector(state => state.cities.cities);
-
-  console.log(cities);
+  const dispatch = useDispatch()
 
   const handleWeatherRefresh = () => {
-    const res = cities.forEach(element => {
-      console.log(element.name);
-    })
+    const words = cities.map(city => city.name)
+
+    dispatch(refreshCitiesData(words));
   }
 
   function success(pos) {
@@ -41,7 +41,10 @@ const WeatherList = () => {
 
   return (
     <>
-      <button onClick={handleWeatherRefresh}>Refresh weather data</button>
+      <div style={{textAlign: 'center', margin: '15px 0'}}>
+        <p>Refresh weather data</p>
+        <FaSync size='40px' onClick={handleWeatherRefresh}/>
+      </div>
       <div className='weather'>
         {currentLocation && (
           <CurrentCity coords={currentLocation} />
